@@ -8,26 +8,26 @@
 
 enum class TokenType
 {
-    TT_int_lit,
-    TT_identifier,
+    int_lit,
+    identifier,
 
-    TT_semi,
-    TT_equals,
+    semi,
+    equals,
 
-    TT_add,
-    TT_subtract,
-    TT_multiply,
-    TT_divide,
+    add,
+    subtract,
+    multiply,
+    divide,
 
-    TT_o_paren,
-    TT_c_paren,
-    TT_o_bracket,
-    TT_c_bracket,
+    o_paren,
+    c_paren,
+    o_bracket,
+    c_bracket,
 
-    TT_int,
-    TT_return,
+    int_,
+    return_,
 
-    TT_eof,
+    eof,
 };
 
 extern const std::unordered_map<std::string, TokenType> c_keywords;

@@ -6,8 +6,8 @@
 
 const std::unordered_map<std::string, TokenType> c_keywords
 {
-    {"return", TokenType::TT_return},
-    {"int",    TokenType::TT_int}
+    {"return", TokenType::return_},
+    {"int",    TokenType::int_}
 };
 
 Token::Token(const std::string& c_value, const TokenType& c_type) : m_value(c_value), m_type(c_type) {}
@@ -28,22 +28,22 @@ std::ostream& operator<<(std::ostream& os, const Token& c_token)
 {
     switch (c_token_type)
     {
-    case (TokenType::TT_int_lit):     return "TT_int_lit";
-    case (TokenType::TT_identifier):  return "TT_identifier";
-    case (TokenType::TT_semi):        return "TT_semi";
-    case (TokenType::TT_equals):      return "TT_equals";
-    case (TokenType::TT_add):         return "TT_add";
-    case (TokenType::TT_subtract):    return "TT_subtract";
-    case (TokenType::TT_multiply):    return "TT_multiply";
-    case (TokenType::TT_divide):      return "TT_divide";
-    case (TokenType::TT_o_paren):     return "TT_o_paren";
-    case (TokenType::TT_c_paren):     return "TT_c_paren";
-    case (TokenType::TT_o_bracket):   return "TT_o_bracket";
-    case (TokenType::TT_c_bracket):   return "TT_c_bracket";
-    case (TokenType::TT_int):         return "TT_int";
-    case (TokenType::TT_return):      return "TT_return";
-    case (TokenType::TT_eof):         return "TT_eof";
-    default:                          return "unknown";
+    case (TokenType::int_lit):    return "int_lit";
+    case (TokenType::identifier): return "identifier";
+    case (TokenType::semi):       return "semi";
+    case (TokenType::equals):     return "equals";
+    case (TokenType::add):        return "add";
+    case (TokenType::subtract):   return "subtract";
+    case (TokenType::multiply):   return "multiply";
+    case (TokenType::divide):     return "divide";
+    case (TokenType::o_paren):    return "o_paren";
+    case (TokenType::c_paren):    return "c_paren";
+    case (TokenType::o_bracket):  return "o_bracket";
+    case (TokenType::c_bracket):  return "c_bracket";
+    case (TokenType::int_):       return "int";
+    case (TokenType::return_):    return "return";
+    case (TokenType::eof):        return "eof";
+    default:                      return "unknown";
     }
 }
 
@@ -65,23 +65,23 @@ std::ostream& operator<<(std::ostream& os, const Token& c_token)
             {
                 switch (current)
                 {
-                case ('('): tokens.push_back({ ctos(current), TokenType::TT_o_paren });   break;
-                case (')'): tokens.push_back({ ctos(current), TokenType::TT_c_paren });   break;
-                case ('{'): tokens.push_back({ ctos(current), TokenType::TT_o_bracket }); break;
-                case ('}'): tokens.push_back({ ctos(current), TokenType::TT_c_bracket }); break;
-                case (';'): tokens.push_back({ ctos(current), TokenType::TT_semi });      break;
-                case ('='): tokens.push_back({ ctos(current), TokenType::TT_equals });    break;
-                case ('+'): tokens.push_back({ ctos(current), TokenType::TT_add });       break;
-                case ('-'): tokens.push_back({ ctos(current), TokenType::TT_subtract });  break;
-                case ('*'): tokens.push_back({ ctos(current), TokenType::TT_multiply });  break;
-                case ('/'): tokens.push_back({ ctos(current), TokenType::TT_divide });    break;
+                case ('('): tokens.push_back({ ctos(current), TokenType::o_paren });   break;
+                case (')'): tokens.push_back({ ctos(current), TokenType::c_paren });   break;
+                case ('{'): tokens.push_back({ ctos(current), TokenType::o_bracket }); break;
+                case ('}'): tokens.push_back({ ctos(current), TokenType::c_bracket }); break;
+                case (';'): tokens.push_back({ ctos(current), TokenType::semi });      break;
+                case ('='): tokens.push_back({ ctos(current), TokenType::equals });    break;
+                case ('+'): tokens.push_back({ ctos(current), TokenType::add });       break;
+                case ('-'): tokens.push_back({ ctos(current), TokenType::subtract });  break;
+                case ('*'): tokens.push_back({ ctos(current), TokenType::multiply });  break;
+                case ('/'): tokens.push_back({ ctos(current), TokenType::divide });    break;
                 default:
                     if (std::isdigit(current))
                     {
                         buffer += current;
                         if (!std::isdigit(next))
                         {
-                            tokens.push_back({ buffer, TokenType::TT_int_lit });
+                            tokens.push_back({ buffer, TokenType::int_lit });
                             buffer.clear();
                         }
                     }
@@ -97,7 +97,7 @@ std::ostream& operator<<(std::ostream& os, const Token& c_token)
                             }
                             else
                             {
-                                tokens.push_back({ buffer, TokenType::TT_identifier });
+                                tokens.push_back({ buffer, TokenType::identifier });
                             }
                             buffer.clear();
                         }
@@ -113,7 +113,7 @@ std::ostream& operator<<(std::ostream& os, const Token& c_token)
         }
     }
 
-    tokens.push_back({ "eof", TokenType::TT_eof });
+    tokens.push_back({ "eof", TokenType::eof });
 
     return tokens;
 }

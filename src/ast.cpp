@@ -8,10 +8,10 @@ void print_expr(const Expr& c_expr)
     std::cout << "Expr: { Type: ";
     switch (c_expr.m_expr_type)
     {
-    case (ExprType::ET_normal):
+    case (ExprType::normal):
         std::cout << "Normal";
         break;
-    case (ExprType::ET_return):
+    case (ExprType::return_):
         std::cout << "Return";
         break;
     }

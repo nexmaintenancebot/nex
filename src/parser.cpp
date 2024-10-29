@@ -3,11 +3,11 @@
 #include "tokenizer.hpp"
 #include "parser.hpp"
 
-Parser::Parser(const std::vector<Token>& m_tokens) : m_tokens(m_tokens) {}
+Parser::Parser(const std::vector<Token>& c_tokens) : m_tokens(c_tokens) {}
 
 [[nodiscard]] Expr Parser::parse_expr()
 {
-	if (peek().get_type() == TokenType::TT_int_lit)
+	if (peek().get_type() == TokenType::int_lit)
 	{
 		Expr expr{ .m_int_lit = std::stoi(peek().get_value())};
 
@@ -24,11 +24,11 @@ Parser::Parser(const std::vector<Token>& m_tokens) : m_tokens(m_tokens) {}
 
 [[nodiscard]] Stmt Parser::parse_stmt()
 {
-	if (peek().get_type() == TokenType::TT_int_lit)
+	if (peek().get_type() == TokenType::int_lit)
 	{
 
 		Expr return_expr{ parse_expr() };
-		return_expr.m_expr_type = ExprType::ET_return;
+		return_expr.m_expr_type = ExprType::return_;
 		Stmt stmt{ .m_expr = return_expr };
 
 		advance();
@@ -44,22 +44,22 @@ Parser::Parser(const std::vector<Token>& m_tokens) : m_tokens(m_tokens) {}
 
 [[nodiscard]] FuncDecl Parser::parse_func_decl()
 {
-	if (peek().get_type() == TokenType::TT_c_paren &&
-		peek(1).get_type() == TokenType::TT_o_bracket)
+	if (peek().get_type() == TokenType::c_paren &&
+		peek(1).get_type() == TokenType::o_bracket)
 	{
 		FuncDecl func_decl{};
 		func_decl.m_name = peek(-2).get_value();
 
 		advance(2);
 
-		while (peek().get_type() != TokenType::TT_eof)
+		while (peek().get_type() != TokenType::eof)
 		{
-			if (peek().get_type() == TokenType::TT_return)
+			if (peek().get_type() == TokenType::return_)
 			{
 				advance();
 				func_decl.m_body.push_back(parse_stmt());
 			}
-			else if (peek().get_type() == TokenType::TT_c_bracket)
+			else if (peek().get_type() == TokenType::c_bracket)
 			{
 				break;
 			}
@@ -78,13 +78,13 @@ Parser::Parser(const std::vector<Token>& m_tokens) : m_tokens(m_tokens) {}
 	}
 }
 
-void Parser::parse()
+void Parser::parse_program()
 {
-	while (peek().get_type() != TokenType::TT_eof)
+	while (peek().get_type() != TokenType::eof)
 	{
-		if (peek().get_type() == TokenType::TT_int &&
-			peek(1).get_type() == TokenType::TT_identifier &&
-			peek(2).get_type() == TokenType::TT_o_paren)
+		if (peek().get_type() == TokenType::int_ &&
+			peek(1).get_type() == TokenType::identifier &&
+			peek(2).get_type() == TokenType::o_paren)
 		{
 			advance(3);
 			m_program.m_body.push_back(parse_func_decl());

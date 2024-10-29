@@ -7,8 +7,8 @@
 
 enum class ExprType
 {
-    ET_normal,
-    ET_return,
+    normal,
+    return_,
 };
 
 struct Expr

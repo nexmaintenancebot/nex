@@ -13,7 +13,7 @@ public:
 	[[nodiscard]] Expr parse_expr();
 	[[nodiscard]] Stmt parse_stmt();
 	[[nodiscard]] FuncDecl parse_func_decl();
-	void parse();
+	void parse_program();
 
 	[[nodiscard]] Token peek(const std::size_t c_offset = 0) const;
 	Token advance(const std::size_t c_distance = 1);

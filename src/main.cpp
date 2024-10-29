@@ -6,6 +6,7 @@
 #include "tokenizer.hpp"
 #include "parser.hpp"
 #include "ast.hpp"
+#include "generator.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -35,10 +36,11 @@ int main(int argc, char* argv[])
             }
 
             Parser parser{ tokens };
-
-            parser.parse();
-
+            parser.parse_program();
             print_program(parser.get_program());
+
+            Generator generator{ parser.get_program() };
+            std::cout << generator.gen_program();
 
         }
     }
@@ -49,10 +51,11 @@ int main(int argc, char* argv[])
     }
 
     Parser parser{ tokens };
-
-    parser.parse();
-
+    parser.parse_program();
     print_program(parser.get_program());
+
+    Generator generator{ parser.get_program() };
+    std::cout << generator.gen_program();
 
     return 0;
 }
